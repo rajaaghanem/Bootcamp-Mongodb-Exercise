@@ -31,6 +31,7 @@ the restaurant collection:
   coordinates:
 
 - db.restaurants.find({"address.coordinates":[-77.46574, 40.6774]}).pretty();
+- db.restaurants.find({"\_id" : ObjectId("61e54343575479ff7e4b79a6")}).address.coordinates.pretty();
 
   1.7. - Write a MongoDb query that should display all restaurants in ascending order by restaurant name:
 
@@ -50,7 +51,7 @@ the restaurant collection:
 
   1.11 - Update all restaurants to be kosher:
 
-- db.restaurants.updateMany({}, {$set:{kosher: true}});
+- db.restaurants.updateMany({kosher: false}, {$set:{kosher: true}});
 
   1.12 - Delete a specific restaurant:
 
@@ -62,15 +63,15 @@ the restaurant collection:
 
 2.1 - Write a MongoDb query to print all restaurant names:
 
-- db.restaurants.find().forEach((user)=> print (user.name));
+- db.restaurants.find().forEach((restaurant)=> print (restaurant.name));
 
   2.2 - Write a MongoDb query to print all restaurant cities:
 
-- db.restaurants.find().forEach((user)=> print (user.address.city));
+- db.restaurants.find().forEach((restaurant)=> print (restaurant.address.city));
 
   2.3 - Write a MongoDb query to print all restaurant coordinates:
 
-- db.restaurants.find().forEach((user)=> print (user.address.coordinates));
+- db.restaurants.find().forEach((restaurant)=> print (restaurant.address.coordinates));
 
 3. Advanced Queries:
 
@@ -86,3 +87,4 @@ the restaurant collection:
 
 - db.restaurants.find({"reviews.date":ISODate("2016-01-01T00:00:00Z")}).pretty();
 - db.restaurants.find({"reviews.date": {$in:[ISODate("2020-01-01T00:00:00Z")]}}).pretty();
+
