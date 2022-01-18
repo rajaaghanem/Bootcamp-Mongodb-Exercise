@@ -1,7 +1,7 @@
 const express = require("express");
 const mongodb = require("mongodb");
 const MongoClient = mongodb.MongoClient;
-const url = "mongodb://localhost:27017";
+const url = "mongodb://127.0.0.1:27017";
 const ObjectID = mongodb.ObjectId;
 const app = express();
 
@@ -12,8 +12,8 @@ MongoClient.connect(url, function (error, client) {
   }
   console.log("connected correctly");
 
-  const db = client.db("blog-dup");
-//   db.collection("users").createIndex({ email: 1 }, { unique: true });
+  const db = client.db("blog-test");
+  db.collection("users").createIndex({ email: 1 }, { unique: true });
   db.collection("users").insertMany(
     [
       {
@@ -24,10 +24,14 @@ MongoClient.connect(url, function (error, client) {
         name: "Adham",
         email: "adham@gmail.com",
       },
+      {
+        name: "Adham",
+        email: "adham@gmail.com",
+      }
     ],
     (error, result) => {
       if (error) {
-        return console.log("Unable to insert  the users");
+        return console.log("Unable to insert the users");
       }
     }
   );
@@ -73,7 +77,7 @@ MongoClient.connect(url, function (error, client) {
     ],
     (error, result) => {
       if (error) {
-        return console.log("Unable to insert  the post");
+        return console.log("Unable to insert the post");
       }
     }
   );
