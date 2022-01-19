@@ -73,11 +73,13 @@ app.patch("/products/active/:id", async (req, res) => {
   const _id = req.params.id;
 
   const updates = Object.keys(req.body);
-  const allowedUpdates = ['isActive', 'details.discount'];
-  const isValidOperation = updates.every((update)=>allowedUpdates.includes(update));
+  const allowedUpdates = ["isActive", "details.discount"];
+  const isValidOperation = updates.every((update) =>
+    allowedUpdates.includes(update)
+  );
 
-  if (!isValidOperation){
-    return res.status(400).send ({error : 'invalid updates'});
+  if (!isValidOperation) {
+    return res.status(400).send({ error: "invalid updates" });
   }
 
   try {
@@ -94,7 +96,17 @@ app.patch("/products/active/:id", async (req, res) => {
 });
 
 // Delete a specific product
+app.delete("/products/:id", async (req, res) => {
+  const _id = req.params.id;
 
+  try {
+    const product = await Product.findByIdAndDelete(_id);
+    if (!product) return res.status(404).send();
+    res.status(200).send(product);
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+});
 
 app.listen(port, () => {
   console.log("Server is up on port" + port);
