@@ -34,26 +34,30 @@ app.get("/products", (req, res) => {
 
 //Get products that are active
 app.get("/products/active", (req, res) => {
-    Product.find({ isActive: true })
-      .then((products) => {
-        res.status(200).send(products);
-      })
-      .catch((e) => {
-        res.status(400).send(e);
-      });
-  });
+  Product.find({ isActive: true })
+    .then((products) => {
+      res.status(200).send(products);
+    })
+    .catch((e) => {
+      res.status(400).send(e);
+    });
+});
 
 //Get products with a specific price range
 app.get("/products/range", (req, res) => {
-    console.log(req.query);
-    Product.find({$and:[{"details.Price": {$lt: req.query.max}},{"details.Price": {$gt: req.query.min}}]})
-      .then((products) => {
-        res.status(200).send(products);
-      })
-      .catch((e) => {
-        res.status(400).send(e);
-      });
-  });
+  Product.find({
+    $and: [
+      { "details.Price": { $lt: req.query.max } },
+      { "details.Price": { $gt: req.query.min } },
+    ],
+  })
+    .then((products) => {
+      res.status(200).send(products);
+    })
+    .catch((e) => {
+      res.status(400).send(e);
+    });
+});
 
 //Get a specific product by id
 app.get("/products/:id", handleResponse);
@@ -70,8 +74,6 @@ function handleResponse(req, res) {
       res.status(400).send(e.message);
     });
 }
-
-
 
 app.listen(port, () => {
   console.log("Server is up on port" + port);
