@@ -48,17 +48,16 @@ const Product = mongoose.model("Product", {
     },
     phone: {
       type: String,
-      validate(value){
-          if (!validator.isMobilePhone(value, 'he-IL'))
-          throw Error ('not valid phone number');
+      validate(value) {
+        if (!validator.isMobilePhone(value, "he-IL"))
+          throw Error("not valid phone number");
       },
       required: true,
     },
-    date:
-    {
-        type: Date,
-        default: Date.now()
-    }
+    date: {
+      type: Date,
+      default: Date.now(),
+    },
   },
 });
 
